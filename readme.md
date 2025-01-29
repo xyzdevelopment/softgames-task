@@ -1,6 +1,8 @@
-npm install
+PixiJS 7 - Typescript
+Vite
 
+1. npm install
 
-npm run dev
+2. npm run dev
 
-npm run build
+3. npm run build
