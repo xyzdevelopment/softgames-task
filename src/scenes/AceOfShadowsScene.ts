@@ -21,7 +21,7 @@ export class AceOfShadowsScene extends PIXI.Container
         // Create 144 stacked cards with alternating colors
         for (let i = 0; i < 144; i++)
         {
-            const texture = i % 2 === 0 ? 'assets/card-back-black.png' : 'assets/card-back-red.png';
+            const texture = i % 2 === 0 ? PIXI.Assets.get('card-back-red') : PIXI.Assets.get('card-back-black')
             const card = PIXI.Sprite.from(texture);
             card.anchor.set(0.5);
             card.x = this.originalStackPosition.x;

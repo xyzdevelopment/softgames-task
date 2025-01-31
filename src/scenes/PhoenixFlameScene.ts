@@ -16,8 +16,8 @@ export class PhoenixFlameScene extends PIXI.Container
     private initParticles()
     {
         const textures = [
-            PIXI.Texture.from('assets/particle.png'),
-            PIXI.Texture.from('assets/Fire.png')
+            PIXI.Assets.get('particle'),
+            PIXI.Assets.get('fire')
         ];
 
         this.emitter = new Emitter(
@@ -32,7 +32,7 @@ export class PhoenixFlameScene extends PIXI.Container
                 particlesPerWave: 1,
                 pos: {
                     x: 640,
-                    y: 720
+                    y: 820
                 },
                 behaviors: [
                     {
@@ -59,7 +59,7 @@ export class PhoenixFlameScene extends PIXI.Container
                             scale: {
                                 list: [
                                     { time: 0, value: 0.25 },
-                                    { time: 1, value: 2 }
+                                    { time: 1, value: 5 }
                                 ]
                             },
                             minMult: 1

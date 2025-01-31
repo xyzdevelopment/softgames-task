@@ -29,19 +29,20 @@ export class MagicWordsScene extends PIXI.Container
             const sprite = PIXI.Sprite.from(character.avatar);
             sprite.anchor.set(0.5);
             sprite.alpha = 0; // Start with characters hidden
+            sprite.scale.set(3)
 
             if (character.name === 'Sheldon')
             {
-                sprite.x = 246;
-                sprite.y = 534;
+                sprite.x = 446;
+                sprite.y = 634;
             } else if (character.name === 'Penny')
             {
-                sprite.x = 856;
-                sprite.y = 534;
+                sprite.x = 1156;
+                sprite.y = 634;
             } else if (character.name === 'Leonard')
             {
-                sprite.x = 586;
-                sprite.y = 304;
+                sprite.x = 786;
+                sprite.y = 404;
             }
 
             sprite.name = character.name; // Assign a name for inspector visibility
@@ -50,14 +51,14 @@ export class MagicWordsScene extends PIXI.Container
 
             const textDisplay = new PIXI.Text('', {
                 fontFamily: 'Arial',
-                fontSize: 20,
+                fontSize: 40,
                 fill: 0xffffff,
                 wordWrap: true,
                 wordWrapWidth: 400,
             });
             textDisplay.anchor.set(0.5);
             textDisplay.x = sprite.x;
-            textDisplay.y = sprite.y - 100; // Position above the character
+            textDisplay.y = sprite.y - 200; // Position above the character
             this.addChild(textDisplay);
             this.textDisplays[character.name] = textDisplay;
         });
@@ -81,14 +82,8 @@ export class MagicWordsScene extends PIXI.Container
         {
             setTimeout(() =>
             {
-                // Fade out characters before restarting
-                gsap.to(Object.values(this.characters), {
-                    alpha: 0, duration: 1, onComplete: () =>
-                    {
-                        this.clearTextDisplays();
-                        this.startDialogueLoop();
-                    }
-                });
+                this.clearTextDisplays();
+                this.startDialogueLoop();
             }, 5000);
             return;
         }
@@ -101,9 +96,16 @@ export class MagicWordsScene extends PIXI.Container
 
         if (characterSprite && textDisplay)
         {
-            gsap.to(characterSprite, { alpha: 1, duration: 0.5 });
+            characterSprite.anchor.set(0.5, 0.5);
+
+            gsap.to(characterSprite, { scaleX: 1.5, scaleY: 1.5, duration: 0.3, ease: 'power2.out' });
+            gsap.to(textDisplay, { scaleX: 1.5, scaleY: 1.5, duration: 0.3, ease: 'power2.out' });
+
             this.typeText(currentDialogue.text, textDisplay, () =>
             {
+                gsap.to(characterSprite, { scaleX: 1, scaleY: 1, duration: 0.3, ease: 'power2.out' });
+                gsap.to(textDisplay, { scaleX: 1, scaleY: 1, duration: 0.3, ease: 'power2.out' });
+
                 this.currentDialogueIndex++;
                 if (this.currentDialogueIndex < this.dialogue.length)
                 {
@@ -124,6 +126,10 @@ export class MagicWordsScene extends PIXI.Container
             setTimeout(() => this.showNextDialogue(), 1000);
         }
     }
+
+
+
+
 
     private typeText(text: string, textDisplay: PIXI.Text, onComplete: () => void)
     {
